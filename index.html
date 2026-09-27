@@ -1,0 +1,747 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#1f120d">
+  <meta name="description" content="Сад кофе — кофейня в Новосибирске">
+  <title>Сад кофе — Новосибирск</title>
+  <style>
+    @font-face{font-family:DysonModern;src:local("Dyson Sans Modern"),local("Dyson Sans");font-display:swap}
+    :root{
+      --bg:#f7f0e8;
+      --paper:#fbf6f0;
+      --sand:#ead8c5;
+      --latte:#d4b08f;
+      --mocha:#8a5b43;
+      --coffee:#43271c;
+      --espresso:#1f120d;
+      --ink:#251610;
+      --muted:#826d62;
+      --line:rgba(66,39,27,.13);
+      --line-light:rgba(255,255,255,.12);
+      --shadow:0 24px 70px rgba(37,18,11,.12);
+      --max:1240px;
+      --radius:30px;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth;overflow-x:hidden}
+    body{
+      margin:0;
+      overflow-x:hidden;
+      background:
+        radial-gradient(circle at top left,rgba(255,255,255,.6),transparent 28%),
+        linear-gradient(180deg,#fbf7f2 0%,#f6eee5 100%);
+      color:var(--ink);
+      font-family:DysonModern,"Avenir Next","Helvetica Neue",Arial,sans-serif;
+      line-height:1.45;
+    }
+    img{max-width:100%;display:block}
+    a{text-decoration:none;color:inherit}
+    .wrap{width:min(var(--max),calc(100% - 56px));margin:auto}
+    .grain:before{
+      content:"";position:fixed;inset:0;pointer-events:none;opacity:.07;mix-blend-mode:multiply;
+      background-image:radial-gradient(rgba(67,39,28,.35) .55px,transparent .7px);
+      background-size:7px 7px;z-index:120
+    }
+    header{
+      position:fixed;inset:0 0 auto;z-index:100;transition:.35s;
+      background:linear-gradient(to bottom,rgba(19,10,7,.35),transparent);
+    }
+    header.scrolled{
+      background:rgba(31,18,13,.84);
+      backdrop-filter:blur(18px);
+      border-bottom:1px solid rgba(255,255,255,.08)
+    }
+    .nav{
+      min-height:82px;display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:24px
+    }
+    .brand{display:flex;align-items:center;gap:12px;color:#fff}
+    .brand-mark{
+      width:40px;height:40px;border-radius:50%;display:grid;place-items:center;
+      background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.1);
+      font-size:15px;letter-spacing:-.04em
+    }
+    .brand-name{font-size:20px;letter-spacing:-.05em;font-weight:650}
+    .brand-name span{font-weight:300}
+    .links{display:flex;align-items:center;justify-content:center;gap:30px;color:#f4e9dc;font-size:13px;letter-spacing:.06em;text-transform:uppercase}
+    .links a{opacity:.78;transition:.2s}
+    .links a:hover{opacity:1}
+    .header-actions{display:flex;align-items:center;justify-content:flex-end;gap:14px}
+    .mini-btn{
+      display:inline-flex;align-items:center;justify-content:center;min-height:42px;min-width:122px;padding:0 20px;border-radius:999px;border:1px solid rgba(255,255,255,.16);
+      color:#fff;background:rgba(255,255,255,.06);font-size:12px;letter-spacing:.06em;text-transform:uppercase;white-space:nowrap;line-height:1
+    }
+    .menu-btn{display:none;border:0;background:none;color:#fff;font-size:26px}
+
+    .hero{
+      position:relative;min-height:100svh;overflow:hidden;color:#f7eee5;
+      background:
+        radial-gradient(circle at 78% 28%,rgba(224,189,157,.28),transparent 24%),
+        radial-gradient(circle at 68% 56%,rgba(170,100,61,.20),transparent 28%),
+        linear-gradient(135deg,#1f120d 0%,#352016 34%,#4b2f22 68%,#2f1c14 100%);
+    }
+    .hero:after{
+      content:"";position:absolute;inset:0;opacity:.11;pointer-events:none;
+      background-image:linear-gradient(rgba(255,255,255,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.04) 1px,transparent 1px);
+      background-size:78px 78px;
+      mask-image:linear-gradient(180deg,rgba(0,0,0,.95),transparent 95%);
+    }
+    .hero-layout{
+      position:relative;display:grid;grid-template-columns:minmax(0,.94fr) minmax(0,1.06fr);gap:30px;
+      align-items:center;min-height:100svh;padding:112px 0 68px
+    }
+    .eyebrow,.kicker{
+      text-transform:uppercase;letter-spacing:.26em;font-size:11px;font-weight:600
+    }
+    .eyebrow{color:#dcc1a8;margin-bottom:28px}
+    .hero-copy{position:relative;z-index:2}
+    .hero h1{
+      margin:0;font-size:clamp(68px,9.2vw,142px);line-height:.88;letter-spacing:-.07em;font-weight:560
+    }
+    .hero h1 em{font-style:normal;font-weight:260;color:#dec4ab}
+    .hero p{
+      max-width:560px;margin:32px 0 0;color:#ddcec0;font-size:17px;line-height:1.72
+    }
+    .hero-meta{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
+    .meta-pill{
+      display:flex;align-items:center;gap:10px;min-height:42px;padding:0 16px;border-radius:999px;
+      border:1px solid rgba(255,255,255,.13);background:rgba(255,255,255,.05);font-size:12px;color:#f3e5d7
+    }
+    .meta-pill b{font-weight:650}
+    .actions{display:flex;gap:16px;flex-wrap:wrap;align-items:center;margin-top:34px}
+    .btn{
+      min-height:52px;display:inline-flex;align-items:center;justify-content:center;padding:0 24px;border-radius:999px;
+      border:1px solid var(--line);font-size:13px;font-weight:650;letter-spacing:.04em;
+      transition:transform .25s ease,background .25s ease,box-shadow .25s ease,color .25s ease
+    }
+    .btn:hover{transform:translateY(-2px)}
+    .btn.light{background:var(--paper);color:var(--espresso);border-color:var(--paper);box-shadow:0 14px 34px rgba(0,0,0,.14)}
+    .btn.ghost{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.15);color:#fff}
+
+    .hero-art{position:relative;display:grid;place-items:center;min-height:720px}
+    .cup-zone{position:relative;width:min(44vw,560px);aspect-ratio:1/1;display:grid;place-items:center}
+    .halo{
+      position:absolute;border-radius:50%;filter:blur(6px);pointer-events:none
+    }
+    .halo.one{width:510px;height:510px;background:rgba(228,200,171,.16);right:14%;top:13%}
+    .halo.two{width:340px;height:340px;background:rgba(110,67,44,.18);left:18%;bottom:16%}
+    .ring{position:absolute;border-radius:50%;border:1px solid rgba(248,236,225,.14);pointer-events:none}
+    .ring.one{width:530px;height:530px}
+    .ring.two{width:680px;height:360px;transform:rotate(-18deg)}
+    .cup-aura{position:absolute;inset:12% 10%;border-radius:50%;background:radial-gradient(circle,rgba(222,192,162,.34) 0%,rgba(222,192,162,.14) 38%,rgba(222,192,162,.04) 60%,transparent 72%);filter:blur(2px);pointer-events:none}
+    .cup-webgl{position:relative;z-index:2;width:100%;height:100%;display:block;pointer-events:none}
+    .cup-webgl-wrap{position:relative;z-index:2;width:min(32vw,390px);min-width:240px;aspect-ratio:1/1;display:grid;place-items:center;transform-style:preserve-3d}
+    #cup3dCanvas{width:100%;height:100%;display:block}
+    .cup-fallback{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 42px 58px rgba(14,7,5,.36));display:none}
+    .cup-plinth{
+      position:absolute;bottom:12%;width:min(340px,60%);height:58px;border-radius:50%;z-index:1;
+      background:radial-gradient(circle,#0f0705 0%,rgba(15,7,5,.08) 70%,transparent 72%);
+      filter:blur(10px);opacity:.88;animation:shadowPulse 7s ease-in-out infinite
+    }
+    .scroll-hint{position:absolute;left:0;bottom:28px;color:#b8a091;font-size:10px;letter-spacing:.24em;text-transform:uppercase}
+
+    .lux-strip{position:relative;z-index:2;margin-top:-36px}
+    .lux-box{
+      background:rgba(255,255,255,.74);backdrop-filter:blur(20px);border:1px solid rgba(56,34,24,.08);
+      border-radius:28px;box-shadow:0 28px 70px rgba(38,20,11,.10);padding:18px;
+      display:grid;grid-template-columns:repeat(4,1fr);gap:12px
+    }
+    .lux-card{
+      min-height:116px;border-radius:22px;padding:20px;background:linear-gradient(180deg,rgba(255,255,255,.7),rgba(255,255,255,.35));
+      border:1px solid rgba(66,39,27,.08)
+    }
+    .lux-card small{display:block;font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:var(--mocha);margin-bottom:14px}
+    .lux-card strong{display:block;font-size:20px;line-height:1.06;letter-spacing:-.04em;margin-bottom:10px}
+    .lux-card span{display:block;color:var(--muted);font-size:13px;line-height:1.55}
+
+    section{padding:122px 0}
+    .section-soft{background:linear-gradient(180deg,rgba(255,255,255,.28),transparent)}
+    .head{display:grid;grid-template-columns:1.1fr .7fr;gap:54px;align-items:end;margin-bottom:56px}
+    .kicker{color:var(--mocha)}
+    .head h2{margin:14px 0 0;font-size:clamp(42px,5.5vw,76px);line-height:.96;letter-spacing:-.055em;font-weight:460}
+    .lead{margin:0;color:var(--muted);font-size:15px;line-height:1.72}
+
+    .features{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;perspective:1200px}
+    .feature{
+      position:relative;min-height:204px;padding:28px;border-radius:26px;background:rgba(255,255,255,.48);
+      border:1px solid rgba(66,39,27,.10);overflow:hidden;transform-style:preserve-3d;transform-origin:center;will-change:transform;
+      transition:transform .18s cubic-bezier(.2,.7,.2,1),background .25s,border-color .25s,box-shadow .25s;
+      box-shadow:0 12px 30px rgba(58,35,24,.03)
+    }
+    .feature:before{
+      content:"";position:absolute;inset:0;opacity:0;transition:.25s;background:linear-gradient(135deg,rgba(212,176,143,.18),transparent 55%)
+    }
+    .feature:hover{background:rgba(255,255,255,.72);border-color:rgba(66,39,27,.16);box-shadow:0 18px 46px rgba(58,35,24,.08)}
+    .feature:hover:before{opacity:1}
+    .feature>*{position:relative;z-index:1;transform:translateZ(12px)}
+    .icon{font-size:22px;filter:grayscale(1);margin-bottom:36px}
+    .feature h3{margin:0 0 10px;font-size:22px;line-height:1.06;letter-spacing:-.03em;font-weight:560}
+    .feature p{margin:0;color:var(--muted);font-size:13px;line-height:1.6}
+
+    .menu{position:relative;color:#f2e6d9;background:
+      radial-gradient(circle at top right,rgba(188,142,108,.16),transparent 20%),
+      linear-gradient(180deg,#1f120d 0%,#241511 100%)}
+    .menu .kicker{color:#d0ad90}.menu .lead{color:#b49d8d}
+    .menu-shell{
+      border-radius:36px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);padding:22px;
+      box-shadow:0 30px 70px rgba(0,0,0,.18)
+    }
+    .menu-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+    .dish{
+      overflow:hidden;border-radius:26px;background:#2e1c15;border:1px solid rgba(255,255,255,.07)
+    }
+    .dish img{width:100%;aspect-ratio:1.05;object-fit:cover;filter:saturate(.82) contrast(1.03);transition:.55s}
+    .dish:hover img{transform:scale(1.025)}
+    .dish-body{padding:22px}
+    .dish-top{display:flex;justify-content:space-between;gap:14px;align-items:flex-start}
+    .dish h3{margin:0;font-size:20px;font-weight:540;letter-spacing:-.03em}
+    .price{color:#d2b398;font-size:13px;white-space:nowrap}
+    .dish p{margin:10px 0 0;color:#a89183;font-size:12px;line-height:1.6}
+    .list{display:grid;grid-template-columns:1fr 1fr;gap:0 56px;margin-top:36px}
+    .row{display:flex;justify-content:space-between;gap:18px;padding:20px 0;border-bottom:1px solid rgba(255,255,255,.09)}
+    .row strong{display:block;font-size:15px;font-weight:530}.row span{font-size:13px;color:#d0b396;white-space:nowrap}.row small{display:block;color:#8e796b;margin-top:4px}
+
+    .about-grid{display:grid;grid-template-columns:.92fr 1.08fr;gap:28px;align-items:stretch}
+    .about-copy, .about-panel{padding:36px;border-radius:30px;background:rgba(255,255,255,.52);border:1px solid rgba(66,39,27,.09);box-shadow:var(--shadow)}
+    .about-copy p{margin:0;color:var(--muted);font-size:17px;line-height:1.72}
+    .quote{margin-top:42px;font-size:clamp(38px,5vw,68px);line-height:.96;letter-spacing:-.06em;font-weight:430}
+    .about-panel{display:grid;grid-template-columns:1fr 1fr;gap:14px;background:linear-gradient(180deg,rgba(255,255,255,.6),rgba(255,255,255,.42))}
+    .about-photo{border-radius:24px;overflow:hidden;min-height:220px}
+    .about-photo img{height:100%;width:100%;object-fit:cover}
+    .stat-card{
+      border-radius:24px;padding:22px;background:rgba(251,246,240,.88);border:1px solid rgba(66,39,27,.08)
+    }
+    .stat-card small{display:block;color:var(--mocha);font-size:10px;letter-spacing:.24em;text-transform:uppercase;margin-bottom:12px}
+    .stat-card strong{display:block;font-size:28px;line-height:.95;letter-spacing:-.05em;margin-bottom:10px}
+    .stat-card span{display:block;color:var(--muted);font-size:13px;line-height:1.6}
+
+    .gallery-shell{padding:18px;border-radius:34px;background:rgba(255,255,255,.52);border:1px solid rgba(66,39,27,.08);box-shadow:var(--shadow)}
+    .gallery{display:grid;grid-template-columns:1.3fr .7fr;gap:14px}
+    .gallery img{width:100%;height:440px;object-fit:cover;border-radius:24px}
+    .gallery .wide{grid-row:span 2;height:894px}
+
+    .contact-shell{display:grid;grid-template-columns:1.05fr .95fr;gap:14px}
+    .info-card,.map{
+      min-height:460px;border-radius:30px;padding:38px;border:1px solid rgba(66,39,27,.08);box-shadow:var(--shadow)
+    }
+    .info-card{background:rgba(255,255,255,.55)}
+    .info-card h3,.map h3{margin:0 0 18px;font-size:clamp(34px,4.5vw,52px);line-height:.95;letter-spacing:-.05em;font-weight:460}
+    .info-card p,.map p{color:var(--muted);font-size:15px;line-height:1.65}
+    .hours{display:grid;grid-template-columns:1fr auto;gap:10px;margin-top:28px;font-size:13px}
+    .hours div{padding-bottom:10px;border-bottom:1px solid var(--line)}
+    .map{position:relative;overflow:hidden;background:linear-gradient(180deg,#523426 0%,#2f1b14 100%);color:#fff;display:flex;align-items:flex-end}
+    .map:before{
+      content:"";position:absolute;inset:0;opacity:.22;background:
+      radial-gradient(circle at 20% 20%,rgba(255,255,255,.16),transparent 22%),
+      linear-gradient(rgba(255,255,255,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.05) 1px,transparent 1px);
+      background-size:auto,78px 78px,78px 78px
+    }
+    .map > div{position:relative;z-index:1}
+    .map p{color:#dfc8b8}
+    .note{
+      margin-top:14px;padding:30px 34px;border-radius:28px;background:rgba(255,255,255,.52);border:1px solid rgba(66,39,27,.08);box-shadow:var(--shadow)
+    }
+    .note strong{display:block;font-size:20px;margin-bottom:12px;letter-spacing:-.02em}
+    .note p{margin:0;color:var(--muted);max-width:860px;font-size:15px;line-height:1.72}
+
+    footer{background:#160c08;color:#f3e7da;padding:56px 0}
+    .foot{display:flex;align-items:flex-end;justify-content:space-between;gap:28px}
+    .foot p{margin:10px 0 0;color:#907d70;font-size:13px}
+    .foot a{font-size:12px;border-bottom:1px solid rgba(255,255,255,.25);padding-bottom:3px}
+
+    .reveal{opacity:0;transform:translateY(22px);transition:opacity .8s ease,transform .8s ease}
+    .reveal.show{opacity:1;transform:none}
+
+    @keyframes cupSpin{0%{transform:translateY(0) rotate(-6deg) rotateY(0deg)}50%{transform:translateY(-14px) rotate(6deg) rotateY(180deg)}100%{transform:translateY(0) rotate(-6deg) rotateY(360deg)}}
+    @keyframes shadowPulse{50%{transform:scale(.88);opacity:.55}}
+
+    @media (max-width:1080px){
+      .hero-layout,.head,.about-grid,.contact-shell{grid-template-columns:1fr}
+      .lux-box,.menu-grid,.about-panel{grid-template-columns:repeat(2,1fr)}
+      .hero-art{min-height:520px}.cup-zone{width:min(62vw,500px)}.cup-webgl-wrap{width:min(44vw,330px);min-width:210px}
+      .contact-shell{gap:18px}
+      .gallery{grid-template-columns:1fr 1fr}
+      .gallery .wide{grid-row:auto;height:440px}
+      .map,.info-card{min-height:unset}
+    }
+    @media (max-width:820px){
+      .wrap{width:min(var(--max),calc(100% - 34px))}
+      .nav{min-height:70px;display:flex;justify-content:space-between;gap:16px}
+      .links{display:none}
+      .menu-btn{display:block}
+      .mini-btn{display:none}
+      .nav.open{position:relative;display:grid;grid-template-columns:1fr auto;align-items:center}
+      .nav.open .links{
+        display:flex;grid-column:1/-1;flex-direction:column;align-items:flex-start;gap:16px;padding:18px 0 4px
+      }
+      .hero-layout{padding:98px 0 48px;gap:10px}
+      .hero h1{font-size:clamp(56px,18vw,88px)}
+      .hero p{font-size:15px}
+      .hero-art{min-height:340px}
+      .cup-zone{width:min(74vw,360px)}
+      .cup-webgl-wrap{width:min(54vw,260px);min-width:170px}
+      .lux-strip{margin-top:-12px}
+      .lux-box,.features,.menu-grid,.list,.gallery,.contact-shell,.about-panel{grid-template-columns:1fr}
+      .head{gap:18px;margin-bottom:34px}
+      section{padding:84px 0}
+      .gallery img,.gallery .wide{height:310px}
+      .foot{flex-direction:column;align-items:flex-start}
+    }
+    @media (max-width:520px){
+      .hero-meta{gap:10px}
+      .meta-pill{font-size:11px;padding:0 14px;min-height:40px}
+      .lux-card,.about-copy,.about-panel,.info-card,.map,.note{padding:24px}
+      .feature{padding:24px;min-height:188px}
+      .scroll-hint{display:none}
+      .hero-copy{order:1}
+      .hero-art{order:2}
+      .actions{align-items:stretch}
+      .btn{width:100%}
+    }
+    @media (pointer:coarse){
+      .feature{transition:transform .14s ease,background .2s}
+      .feature:active{transform:scale(.985)!important;background:rgba(255,255,255,.78)}
+    }
+    @media (prefers-reduced-motion:reduce){
+      *{scroll-behavior:auto!important}
+      .cup-plinth{animation:none!important}
+      .reveal{opacity:1;transform:none}
+      .feature{transition:none!important;transform:none!important}
+    }
+  </style>
+</head>
+<body class="grain">
+  <header id="siteHeader">
+    <div class="wrap nav" id="nav">
+      <a class="brand" href="#top">
+        <div class="brand-mark">СК</div>
+        <div class="brand-name">сад <span>кофе</span></div>
+      </a>
+      <nav class="links">
+        <a href="#features">Особенности</a>
+        <a href="#menu">Меню</a>
+        <a href="#about">О нас</a>
+        <a href="#contacts">Контакты</a>
+      </nav>
+      <div class="header-actions">
+        <a class="mini-btn" href="tel:+79133764681">Позвонить</a>
+        <button class="menu-btn" aria-label="Открыть меню">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="wrap hero-layout">
+        <div class="hero-copy reveal">
+          <div class="eyebrow">Советская, 37 · Новосибирск</div>
+          <h1>Сад<br><em>кофе</em></h1>
+          <p>Кофе, завтраки и кухня в спокойном городском пространстве. Тёплая кофейня с мягким ритмом, куда приходят за хорошим вкусом, красивой подачей и ощущением, что можно никуда не спешить.</p>
+          <div class="hero-meta">
+            <div class="meta-pill"><b>Кофе с собой</b></div>
+            <div class="meta-pill"><b>Завтраки и кухня</b></div>
+            <div class="meta-pill"><b>Wi‑Fi · веранда · доставка</b></div>
+          </div>
+          <div class="actions">
+            <a class="btn light" href="#menu">Смотреть меню</a>
+            <a class="btn ghost" href="#contacts">Как нас найти</a>
+          </div>
+        </div>
+
+        <div class="hero-art reveal" aria-label="Фирменный стакан Сад кофе">
+          <div class="cup-zone" id="cupZone">
+            <div class="halo one"></div>
+            <div class="halo two"></div>
+            <div class="ring one"></div>
+            <div class="ring two"></div>
+            <div class="cup-aura"></div>
+            <div class="cup-plinth"></div>
+            <div class="cup-webgl-wrap" id="cup3dWrap">
+              <canvas id="cup3dCanvas" class="cup-webgl"></canvas>
+              <img class="cup-fallback" id="cupFallback" src="images/cup-hero.png" alt="Стакан кофе">
+            </div>
+          </div>
+        </div>
+
+        <div class="scroll-hint">листайте ↓</div>
+      </div>
+    </section>
+
+    <div class="lux-strip reveal">
+      <div class="wrap">
+        <div class="lux-box">
+          <div class="lux-card"><small>настроение</small><strong>Тихое место<br>в центре</strong><span>Спокойная атмосфера для кофе, завтрака и встреч.</span></div>
+          <div class="lux-card"><small>кухня</small><strong>Европейская<br>и авторская</strong><span>От завтраков и салатов до более плотных горячих блюд.</span></div>
+          <div class="lux-card"><small>ритм</small><strong>Утром — кофе,<br>вечером — вино</strong><span>По описанию заведения есть коктейли и винная карта.</span></div>
+          <div class="lux-card"><small>формат</small><strong>Навынос,<br>самовывоз, доставка</strong><span>Удобно как для короткой остановки, так и для заказа с собой.</span></div>
+        </div>
+      </div>
+    </div>
+
+    <section id="features" class="section-soft">
+      <div class="wrap">
+        <div class="head reveal">
+          <div>
+            <div class="kicker">Почему сюда</div>
+            <h2>Всё, что важно.</h2>
+          </div>
+          <p class="lead">Карточки специально оставлены с маленьким зазором и живой реакцией на курсор — это делает блок аккуратнее и визуально дороже, не перегружая страницу.</p>
+        </div>
+
+        <div class="features">
+          <div class="feature reveal"><div class="icon">☕</div><h3>Кофе с собой</h3><p>Можно взять напиток навынос и не терять время в дороге.</p></div>
+          <div class="feature reveal"><div class="icon">🐕</div><h3>Можно с собакой</h3><p>Комфортный формат для гостей, которые приходят с питомцами.</p></div>
+          <div class="feature reveal"><div class="icon">📶</div><h3>Wi‑Fi</h3><p>Подходит, чтобы поработать, встретиться или просто спокойно посидеть.</p></div>
+          <div class="feature reveal"><div class="icon">🥡</div><h3>Еда навынос</h3><p>Основные позиции можно взять с собой без долгого ожидания.</p></div>
+          <div class="feature reveal"><div class="icon">🎁</div><h3>Подарочный сертификат</h3><p>Удобный вариант для подарка друзьям и близким.</p></div>
+          <div class="feature reveal"><div class="icon">💳</div><h3>Удобная оплата</h3><p>Карта, наличные, QR‑код и СБП — привычные способы на месте.</p></div>
+          <div class="feature reveal"><div class="icon">🚗</div><h3>Самовывоз</h3><p>Можно быстро забрать заказ самостоятельно.</p></div>
+          <div class="feature reveal"><div class="icon">🛵</div><h3>Доставка</h3><p>Доступна через Яндекс Еду и Delivery Club.</p></div>
+          <div class="feature reveal"><div class="icon">🌿</div><h3>Веранда</h3><p>Есть возможность посидеть на свежем воздухе в тёплое время.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="menu" class="menu">
+      <div class="wrap">
+        <div class="head reveal">
+          <div>
+            <div class="kicker">Меню</div>
+            <h2>Еда, ради которой<br>можно задержаться.</h2>
+          </div>
+          <p class="lead">Тёмный блок сделал более «ресторанным»: контрастный фон, глубина и спокойные акценты. Твои фотографии блюд сохранены и встроены как основные визуалы.</p>
+        </div>
+
+        <div class="menu-shell">
+          <div class="menu-grid">
+            <article class="dish reveal"><img src="images/borscht.jpg" alt="Борщ"><div class="dish-body"><div class="dish-top"><h3>Борщ с говядиной</h3><div class="price">369 ₽</div></div><p>Насыщенный борщ с томлёной говядиной. Фото — из материалов пользователя.</p></div></article>
+            <article class="dish reveal"><img src="images/salad.jpg" alt="Салат"><div class="dish-body"><div class="dish-top"><h3>Салат с жареным тунцом</h3><div class="price">489 ₽</div></div><p>Лёгкая позиция из раздела салатов. Фото — из материалов пользователя.</p></div></article>
+            <article class="dish reveal"><img src="images/carbonara.jpg" alt="Паста карбонара"><div class="dish-body"><div class="dish-top"><h3>Паста карбонара</h3><div class="price">609 ₽</div></div><p>Классическая паста с насыщенным сливочным вкусом. Фото — из материалов пользователя.</p></div></article>
+          </div>
+
+          <div class="list">
+            <div class="row reveal"><div><strong>Гречневая соба с креветками</strong><small>Горячее</small></div><span>659 ₽</span></div>
+            <div class="row reveal"><div><strong>Картофельное пюре с тушёной курицей</strong><small>В сливочном соусе</small></div><span>599 ₽</span></div>
+            <div class="row reveal"><div><strong>Паста пенне с томлёной говядиной</strong><small>Горячее</small></div><span>659 ₽</span></div>
+            <div class="row reveal"><div><strong>Стейк из тунца с грибным соусом</strong><small>Картофель, грибы и шпинат</small></div><span>699 ₽</span></div>
+            <div class="row reveal"><div><strong>Брускетта с форелью</strong><small>Горячая закуска</small></div><span>509 ₽</span></div>
+            <div class="row reveal"><div><strong>Буррито с говядиной и овощами</strong><small>Горячая закуска</small></div><span>479 ₽</span></div>
+            <div class="row reveal"><div><strong>Сырники с кокосовой сгущёнкой</strong><small>Завтрак</small></div><span>469 ₽</span></div>
+            <div class="row reveal"><div><strong>Сырники с черникой и сметаной</strong><small>Завтрак</small></div><span>469 ₽</span></div>
+            <div class="row reveal"><div><strong>Зелёный салат с индейкой</strong><small>Салат</small></div><span>449 ₽</span></div>
+            <div class="row reveal"><div><strong>Салат с ростбифом и картофелем</strong><small>Салат</small></div><span>469 ₽</span></div>
+            <div class="row reveal"><div><strong>Суп сырный</strong><small>Супы</small></div><span>379 ₽</span></div>
+            <div class="row reveal"><div><strong>Чиа-пудинг «Сникерс»</strong><small>Десерт</small></div><span>429 ₽</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="about">
+      <div class="wrap">
+        <div class="head reveal">
+          <div>
+            <div class="kicker">О месте</div>
+            <h2>Небольшой сад<br>в центре города.</h2>
+          </div>
+          <p class="lead">По описаниям заведения — европейская и авторская кухня, завтраки, кофе, коктейли и винная карта. Средний чек указан в диапазоне 400–600 ₽.</p>
+        </div>
+
+        <div class="about-grid">
+          <div class="about-copy reveal">
+            <p>Интерьер и подача ассоциируются с мягкими кремовыми оттенками, тёплым светом и спокойными деталями. Поэтому и сайт переведён в более чистый премиальный стиль: меньше визуального шума, больше воздуха, ровнее композиция и аккуратнее работа с блоками.</p>
+            <div class="quote">«Зайти на кофе.<br>Остаться подольше.»</div>
+          </div>
+
+          <div class="about-panel reveal">
+            <div class="about-photo"><img src="images/salad.jpg" alt="Салат"></div>
+            <div class="stat-card"><small>Средний чек</small><strong>400–600 ₽</strong><span>Подходит и для короткого кофе-брейка, и для более полноценного визита с едой.</span></div>
+            <div class="stat-card"><small>Формат</small><strong>Кофе · кухня · вино</strong><span>Не только напитки, но и еда, завтрак, вечерние позиции и спокойный городской вайб.</span></div>
+            <div class="about-photo"><img src="images/carbonara.jpg" alt="Паста карбонара"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-soft">
+      <div class="wrap">
+        <div class="head reveal">
+          <div>
+            <div class="kicker">Фото меню</div>
+            <h2>То, что хочется<br>увидеть крупнее.</h2>
+          </div>
+        </div>
+        <div class="gallery-shell reveal">
+          <div class="gallery">
+            <img class="wide" src="images/borscht.jpg" alt="Борщ">
+            <img src="images/salad.jpg" alt="Салат">
+            <img src="images/carbonara.jpg" alt="Паста карбонара">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contacts">
+      <div class="wrap">
+        <div class="head reveal">
+          <div>
+            <div class="kicker">Контакты</div>
+            <h2>Увидимся в саду.</h2>
+          </div>
+        </div>
+
+        <div class="contact-shell">
+          <div class="info-card reveal">
+            <h3>Советская, 37</h3>
+            <p>Новосибирск · площадь Ленина</p>
+            <p>Средний чек: <strong>400–600 ₽</strong></p>
+            <p>Телефон: <strong>+7 913 376-46-81</strong></p>
+            <div class="hours">
+              <div>Пн–Чт</div><div>07:30–22:00</div>
+              <div>Пт</div><div>07:30–23:00</div>
+              <div>Сб</div><div>08:30–23:00</div>
+              <div>Вс</div><div>08:30–22:00</div>
+            </div>
+            <div class="actions">
+              <a class="btn light" href="tel:+79133764681">Позвонить</a>
+              <a class="btn" style="background:transparent;color:var(--ink)" target="_blank" href="https://yandex.ru/maps/org/sad_kofe/21652201311?si=h2t2x2evf67ddad6y75zm98934">Открыть карты</a>
+            </div>
+          </div>
+
+          <div class="map reveal">
+            <div>
+              <h3>Сад кофе</h3>
+              <p>Советская улица, 37<br>Новосибирск, 630099</p>
+              <a class="btn ghost" target="_blank" href="https://yandex.ru/maps/org/sad_kofe/21652201311?si=h2t2x2evf67ddad6y75zm98934">Маршрут →</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="note reveal">
+          <strong>Полезно перед визитом</strong>
+          <p>Можно с собакой, есть Wi‑Fi, еда навынос, самовывоз и веранда. Для заказов и доставки доступны Яндекс Еда и Delivery Club. Оплата — картой, наличными, QR‑кодом или через СБП.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap foot">
+      <div>
+        <div class="brand-name">сад <span>кофе</span></div>
+        <p>Кофе · завтраки · кухня · вино · коктейли</p>
+      </div>
+      <a href="#top">Наверх ↑</a>
+    </div>
+  </footer>
+
+  <script type="module">
+    import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.js';
+
+    const nav=document.getElementById('nav');
+    const head=document.getElementById('siteHeader');
+    const menuBtn=document.querySelector('.menu-btn');
+    menuBtn.onclick=()=>nav.classList.toggle('open');
+    document.querySelectorAll('.links a').forEach(a=>a.onclick=()=>nav.classList.remove('open'));
+    addEventListener('scroll',()=>head.classList.toggle('scrolled',scrollY>20),{passive:true});
+
+    const io=new IntersectionObserver(entries=>entries.forEach(entry=>{
+      if(entry.isIntersecting) entry.target.classList.add('show');
+    }),{threshold:.08});
+    document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+    const canTilt=matchMedia('(pointer:fine)').matches&&!matchMedia('(prefers-reduced-motion: reduce)').matches;
+    document.querySelectorAll('.feature').forEach(card=>{
+      if(!canTilt) return;
+      card.addEventListener('mousemove',e=>{
+        const r=card.getBoundingClientRect();
+        const x=(e.clientX-r.left)/r.width-.5;
+        const y=(e.clientY-r.top)/r.height-.5;
+        const ry=x*7;
+        const rx=-y*7;
+        card.style.transform=`perspective(920px) rotateX(${rx}deg) rotateY(${ry}deg) translateY(-2px)`;
+      });
+      card.addEventListener('mouseleave',()=>{card.style.transform='perspective(920px) rotateX(0deg) rotateY(0deg) translateY(0)';});
+      card.addEventListener('mouseenter',()=>{card.style.transition='transform .10s ease-out,background .25s,border-color .25s,box-shadow .25s';});
+    });
+
+    const canvas = document.getElementById('cup3dCanvas');
+    const wrap = document.getElementById('cup3dWrap');
+    const zone = document.getElementById('cupZone');
+    const fallback = document.getElementById('cupFallback');
+
+    function showFallback(){
+      if (canvas) canvas.style.display='none';
+      if (fallback) fallback.style.display='block';
+    }
+
+    if (canvas && wrap && zone && window.WebGLRenderingContext) {
+      try {
+        const renderer = new THREE.WebGLRenderer({canvas, alpha:true, antialias:true, powerPreference:'high-performance'});
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        renderer.outputColorSpace = THREE.SRGBColorSpace;
+
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(30, 1, 0.1, 100);
+        camera.position.set(0, 0.25, 10.2);
+
+        const ambient = new THREE.AmbientLight(0xfff3e8, 1.55);
+        scene.add(ambient);
+
+        const key = new THREE.DirectionalLight(0xfff0e1, 2.2);
+        key.position.set(4, 6, 8);
+        scene.add(key);
+
+        const fill = new THREE.DirectionalLight(0xd7b697, 1.05);
+        fill.position.set(-5, 1, 4);
+        scene.add(fill);
+
+        const rimLight = new THREE.DirectionalLight(0xffffff, 1.25);
+        rimLight.position.set(-6, 5, -6);
+        scene.add(rimLight);
+
+        const loader = new THREE.TextureLoader();
+        const sleeveTexture = loader.load('images/sleeve-texture.png');
+        sleeveTexture.colorSpace = THREE.SRGBColorSpace;
+        sleeveTexture.wrapS = THREE.RepeatWrapping;
+        sleeveTexture.repeat.set(1.2,1);
+
+        const coffeeTexture = loader.load('images/latte-art-texture.png');
+        coffeeTexture.colorSpace = THREE.SRGBColorSpace;
+
+        const group = new THREE.Group();
+        scene.add(group);
+
+        const cupMaterial = new THREE.MeshStandardMaterial({color:0xf7f7f7, roughness:0.8, metalness:0.02});
+        const lidMaterial = new THREE.MeshStandardMaterial({color:0x141414, roughness:0.62, metalness:0.08});
+        const lidTopMaterial = new THREE.MeshStandardMaterial({color:0x1a1a1a, roughness:0.56, metalness:0.08});
+        const lidDetailMaterial = new THREE.MeshStandardMaterial({color:0x0d0d0d, roughness:0.70, metalness:0.03});
+        const sleeveMaterial = new THREE.MeshStandardMaterial({color:0xc7a17e, roughness:0.94, metalness:0.0});
+        const coffeeMaterial = new THREE.MeshStandardMaterial({map:coffeeTexture, roughness:0.92, metalness:0.0});
+        const shadowMaterial = new THREE.ShadowMaterial({opacity:0.14});
+
+        const bodyGeo = new THREE.CylinderGeometry(1.25, 0.91, 3.20, 128, 1, true);
+        const body = new THREE.Mesh(bodyGeo, cupMaterial);
+        body.position.y = -0.50;
+        group.add(body);
+
+        const baseGeo = new THREE.CircleGeometry(0.91, 128);
+        const base = new THREE.Mesh(baseGeo, cupMaterial);
+        base.rotation.x = -Math.PI / 2;
+        base.position.y = -2.10;
+        group.add(base);
+
+        const innerWallGeo = new THREE.CylinderGeometry(1.16, 0.89, 3.05, 128, 1, true);
+        const innerWallMat = new THREE.MeshStandardMaterial({color:0xffffff, side:THREE.BackSide, roughness:0.84});
+        const innerWall = new THREE.Mesh(innerWallGeo, innerWallMat);
+        innerWall.position.y = -0.49;
+        group.add(innerWall);
+
+        const sleeveGeo = new THREE.CylinderGeometry(1.31, 1.08, 1.48, 128, 1, true);
+        const sleeve = new THREE.Mesh(sleeveGeo, sleeveMaterial);
+        sleeve.position.y = -0.34;
+        group.add(sleeve);
+
+        // Compact takeaway lid: almost flush with the cup, like the reference photo.
+        const lidClamp = new THREE.Mesh(new THREE.CylinderGeometry(1.34, 1.27, 0.18, 128), lidMaterial);
+        lidClamp.position.y = 1.19;
+        group.add(lidClamp);
+
+        const lidOuterRim = new THREE.Mesh(new THREE.CylinderGeometry(1.39, 1.34, 0.14, 128), lidMaterial);
+        lidOuterRim.position.y = 1.34;
+        group.add(lidOuterRim);
+
+        const lidRimRing = new THREE.Mesh(new THREE.TorusGeometry(1.345, 0.052, 20, 160), lidMaterial);
+        lidRimRing.rotation.x = Math.PI / 2;
+        lidRimRing.position.y = 1.405;
+        group.add(lidRimRing);
+
+        const lidRaisedCenter = new THREE.Mesh(new THREE.CylinderGeometry(1.22, 1.28, 0.28, 128), lidMaterial);
+        lidRaisedCenter.position.y = 1.53;
+        group.add(lidRaisedCenter);
+
+        const lidPlate = new THREE.Mesh(new THREE.CylinderGeometry(1.16, 1.16, 0.09, 128), lidTopMaterial);
+        lidPlate.position.y = 1.705;
+        group.add(lidPlate);
+
+        const lidTopRing = new THREE.Mesh(new THREE.TorusGeometry(1.145, 0.038, 18, 160), lidTopMaterial);
+        lidTopRing.rotation.x = Math.PI / 2;
+        lidTopRing.position.y = 1.755;
+        group.add(lidTopRing);
+
+        const sipPanel = new THREE.Mesh(new THREE.BoxGeometry(0.80, 0.045, 0.48), lidTopMaterial);
+        sipPanel.position.set(0.05, 1.765, 0.16);
+        group.add(sipPanel);
+
+        const sipOpening = new THREE.Mesh(new THREE.BoxGeometry(0.24, 0.05, 0.14), lidDetailMaterial);
+        sipOpening.position.set(-0.43, 1.77, 0.18);
+        group.add(sipOpening);
+
+        const sipOpeningEdge = new THREE.Mesh(new THREE.BoxGeometry(0.13, 0.045, 0.25), lidDetailMaterial);
+        sipOpeningEdge.position.set(-0.59, 1.77, 0.05);
+        sipOpeningEdge.rotation.y = 0.68;
+        group.add(sipOpeningEdge);
+
+        const groundShadow = new THREE.Mesh(new THREE.CircleGeometry(2.1, 64), shadowMaterial);
+        groundShadow.rotation.x = -Math.PI / 2;
+        groundShadow.position.y = -2.32;
+        groundShadow.scale.set(1.18, 0.54, 1);
+        scene.add(groundShadow);
+
+        group.rotation.z = -0.08;
+        group.position.y = 0.18;
+        group.scale.setScalar(0.88);
+
+        const target = {x:0, y:0};
+        const current = {x:0, y:0};
+        let baseRotation = 0;
+
+        function resize(){
+          const rect = wrap.getBoundingClientRect();
+          const w = Math.max(10, Math.floor(rect.width));
+          const h = Math.max(10, Math.floor(rect.height));
+          renderer.setSize(w, h, false);
+          camera.aspect = w / h;
+          camera.updateProjectionMatrix();
+        }
+        resize();
+        addEventListener('resize', resize);
+
+        if (canTilt) {
+          zone.addEventListener('mousemove', e => {
+            const r = zone.getBoundingClientRect();
+            const x = (e.clientX - r.left) / r.width - 0.5;
+            const y = (e.clientY - r.top) / r.height - 0.5;
+            target.y = x * 0.55;
+            target.x = -y * 0.22;
+          });
+          zone.addEventListener('mouseleave', () => { target.x = 0; target.y = 0; });
+        }
+
+        const clock = new THREE.Clock();
+        function animate(){
+          requestAnimationFrame(animate);
+          const t = clock.getElapsedTime();
+          baseRotation += 0.0065;
+          current.x += (target.x - current.x) * 0.08;
+          current.y += (target.y - current.y) * 0.08;
+          group.rotation.y = baseRotation + current.y;
+          group.rotation.x = current.x;
+          group.rotation.z = -0.08 + Math.sin(t * 1.15) * 0.02;
+          group.position.y = 0.18 + Math.sin(t * 1.6) * 0.07;
+          groundShadow.scale.x = 1.12 + Math.sin(t * 1.6) * 0.03;
+          groundShadow.scale.y = 0.53 + Math.sin(t * 1.6) * 0.02;
+          renderer.render(scene, camera);
+        }
+        animate();
+      } catch (err) {
+        console.error(err);
+        showFallback();
+      }
+    } else {
+      showFallback();
+    }
+  </script>
+</body>
+</html>
